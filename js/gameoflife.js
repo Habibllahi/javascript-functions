@@ -1,3 +1,30 @@
+function hieghest(state = [],index){
+  let hieghest = 0;
+  if(state.length){
+    state.forEach((value) => {
+      if(value[index] > hieghest){
+        hieghest = value[index];
+      }
+    });
+  }
+  return hieghest;
+}
+
+function lowest(state = [],index){
+  let lowest = 10000000000000;
+  if(state.length){
+    state.forEach((value) => {
+      if(value[index] < lowest){
+        lowest = value[index];
+      }
+    });
+  }else{
+    lowest = 0;
+  }
+  return lowest;
+}
+
+
 function seed() {
   const args = [...arguments];
   return args;
@@ -6,19 +33,47 @@ function seed() {
 function same([x, y], [j, k]) {
   let exact = false;
   if((x === j) && (y === k)){
-    exact = false;
+    exact = true;
   }
   return exact;
 }
 
 // The game state to search for `cell` is passed as the `this` value of the function.
-function contains(cell) {}
+function contains(cell) {
+  const [a,b] = cell;
+  const found = this.find((value)=> {
+    let [x,y] = value;
+    return (a === x) && (b === y)
+  });
+  
+  if(found){
+    return true
+  }else{
+    return false
+  }
+}
 
-const printCell = (cell, state) => {};
+const printCell = (cell, state) => {
+  if(contains.call(state,cell)){
+    return '\u25A3';
+  }else{
+    return '\u25A2';
+  }
+};
 
-const corners = (state = []) => {};
+const corners = (state = []) => {
+  const coners = {
+    topRight: [0,0], 
+    bottomLeft: [0,0]
+  }
+  coners.topRight = [hieghest(state,0), hieghest(state,1)]
+  coners.bottomLeft = [lowest(state,0), lowest(state,1)]
+  return coners;
+}
 
-const printCells = (state) => {};
+const printCells = (state) => {
+
+};
 
 const getNeighborsOf = ([x, y]) => {};
 
